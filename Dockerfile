@@ -13,6 +13,10 @@ RUN apk --update add \
 RUN curl ${pip_installer} | python && \
     pip install awscli==${awscli_version}
 
+RUN mkdir ~/.aws
+
+RUN echo $'[default]\nregion = ap-northeast-1\noutput = json\n[preview]\ncloudfront = true' >  ~/.aws/config
+
 # Execute aws command
 ENV PAGER="less"
 ENTRYPOINT ["/usr/bin/aws"]
